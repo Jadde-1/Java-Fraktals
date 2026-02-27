@@ -8,8 +8,8 @@ public class GUI {
 		//kreation af the frame
 				JFrame mainFrame = new JFrame("A* finding");
 				mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				PathPanel pathPanel = new PathPanel();
-				mainFrame.add(pathPanel);
+				Panel Panel = new Panel();
+				mainFrame.add(Panel);
 				mainFrame.pack();
 				mainFrame.setVisible(true);
 	}

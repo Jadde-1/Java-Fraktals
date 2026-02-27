@@ -7,3 +7,6 @@ public class Main {
 	}
 
 }
+
+
+//wild fracktals https://github.com/kiwijuice56/java-fractals
