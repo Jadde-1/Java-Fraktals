@@ -1,9 +1,10 @@
 
 public class Fracktal {
 
-	public static void main(String[] args) {
-		//to do
+		public void drawFracktal() {
+			//set up to draw a fracktal and get the number form the gey lisenter så dras the spicifik fraktal
+		}
 
-	}
+	
 
 }
