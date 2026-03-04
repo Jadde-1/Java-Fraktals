@@ -1,45 +1,79 @@
 package Fracktal;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class SierpinskisTriangle {
-    private int depth = 10; //Recursion depth
+
+    private static final int MAX_DEPTH = 11; // Recursion depth
     
     public void draw(Graphics g, int width, int height, double zoom) {
-        //Define the three points of the main triangle
-        int x1 = width / 2;
-        int y1 = (int) (50 / zoom);
-        
-        int x2 = (int) ((width / 2 - 300) / zoom + (width / 2) * (1 - 1/zoom));
-        int y2 = (int) ((height - 50) / zoom + 50 * (1 - 1/zoom));
-        
-        int x3 = (int) ((width / 2 + 300) / zoom + (width / 2) * (1 - 1/zoom));
-        int y3 = (int) ((height - 50) / zoom + 50 * (1 - 1/zoom));
-        
-        //Start recursive drawing
-        drawTriangle(g, x1, y1, x2, y2, x3, y3, depth);
+        draw(g, width, height, zoom, 0.5, 0.5);
     }
     
-    private void drawTriangle(Graphics g, int x1, int y1, int x2, int y2, int x3, int y3, int depth) {
-        if (depth == 0) {
-            // Draw the triangle
-            g.drawLine(x1, y1, x2, y2);
-            g.drawLine(x2, y2, x3, y3);
-            g.drawLine(x3, y3, x1, y1);
-        } else {
-            //Calculate midpoints
-            int x12 = (x1 + x2) / 2;
-            int y12 = (y1 + y2) / 2;
-            
-            int x23 = (x2 + x3) / 2;
-            int y23 = (y2 + y3) / 2;
-            
-            int x31 = (x3 + x1) / 2;
-            int y31 = (y3 + y1) / 2;
-            
-            // Recursively draw three smaller triangles
-            drawTriangle(g, x1, y1, x12, y12, x31, y31, depth - 1);
-            drawTriangle(g, x12, y12, x2, y2, x23, y23, depth - 1);
-            drawTriangle(g, x31, y31, x23, y23, x3, y3, depth - 1);
-        }
-    }
+	public void draw(Graphics g, int width, int height, double zoom, double cx, double cy) {
+		Graphics2D g2d = (Graphics2D) g;
+		
+		// Clear background
+		g2d.setColor(Color.BLACK);
+		g2d.fillRect(0, 0, width, height);
+		
+		// Calculate triangle dimensions with zoom
+		int size = (int) (Math.min(width, height) * 0.8 * zoom);
+		
+		// Calculate center point based on zoom target
+		int centerX = (int) (width * cx);
+		int centerY = (int) (height * cy);
+		
+		// Define the three corners of the main triangle
+		int[] xPoints = new int[3];
+		int[] yPoints = new int[3];
+		
+		// Top point
+		xPoints[0] = centerX;
+		yPoints[0] = centerY - size / 2;
+		
+		// Bottom left
+		xPoints[1] = centerX - size / 2;
+		yPoints[1] = centerY + size / 2;
+		
+		// Bottom right
+		xPoints[2] = centerX + size / 2;
+		yPoints[2] = centerY + size / 2;
+		
+		// Draw recursively
+		g2d.setColor(Color.WHITE);
+		drawSierpinski(g2d, xPoints, yPoints, 0);
+	}
+	
+	private void drawSierpinski(Graphics2D g, int[] x, int[] y, int depth) {
+	    if (depth >= MAX_DEPTH) {
+	        // Draw filled triangle at max depth
+	        g.fillPolygon(x, y, 3);
+	        return;
+	    }
+	    
+	    // Calculate midpoints
+	    int[] mx = new int[3];
+	    int[] my = new int[3];
+	    
+	    mx[0] = (x[0] + x[1]) / 2; // Midpoint between top and left
+	    my[0] = (y[0] + y[1]) / 2;
+	    
+	    mx[1] = (x[1] + x[2]) / 2; // Midpoint between left and right
+	    my[1] = (y[1] + y[2]) / 2;
+	    
+	    mx[2] = (x[2] + x[0]) / 2; // Midpoint between right and top
+	    my[2] = (y[2] + y[0]) / 2;
+	    
+	    // Recursively draw three smaller triangles
+	    // Top triangle
+	    drawSierpinski(g, new int[]{x[0], mx[0], mx[2]}, new int[]{y[0], my[0], my[2]}, depth + 1);
+	    
+	    // Bottom left triangle
+	    drawSierpinski(g, new int[]{mx[0], x[1], mx[1]}, new int[]{my[0], y[1], my[1]}, depth + 1);
+	    
+	    // Bottom right triangle
+	    drawSierpinski(g, new int[]{mx[2], mx[1], x[2]}, new int[]{my[2], my[1], y[2]}, depth + 1);
+	}
 }
