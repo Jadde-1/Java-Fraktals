@@ -7,9 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import Fracktal.SierpinskisTriangle;
-import GUI.DrawPanel;
 
 public class GUI extends JFrame {
 	  private DrawPanel drawPanel;
@@ -24,7 +22,7 @@ public class GUI extends JFrame {
 	        
 	     //Use custom JPanel for drawing
 	     drawPanel = new DrawPanel();
-	     drawPanel.setPreferredSize(new Dimension(800, 600));
+	     drawPanel.setPreferredSize(new Dimension(1200, 1000));
 	     add(drawPanel);
 	        
 	     pack();

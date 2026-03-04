@@ -1,4 +1,3 @@
-
 public class Main {
 
 	public static void main(String[] args) {
@@ -7,6 +6,4 @@ public class Main {
 	}
 
 }
-
-
 //wild fracktals https://github.com/kiwijuice56/java-fractals
