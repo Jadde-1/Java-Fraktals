@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import Fracktal.SierpinskisTriangle;
+import Fracktal.mandelbrot;
 
 public class GUI extends JFrame {
 	  private DrawPanel drawPanel;
@@ -108,8 +109,8 @@ public class GUI extends JFrame {
 	                SierpinskisTriangle triangle = new SierpinskisTriangle();
 	                triangle.draw(g, getWidth(), getHeight(), zoom, cx, cy);
 	            } else if (fractalType == 2) {
-	                // Add other fractal types here
-	                g.drawString("Fractal Type 2 - Not implemented yet", 50, 50);
+	            	mandelbrot circle = new mandelbrot();
+	                circle.draw(g, getWidth(), getHeight(), zoom, cx, cy);
 	            } else if (fractalType == 3) {
 	                g.drawString("Fractal Type 3 - Not implemented yet", 50, 50);
 	            } else {
